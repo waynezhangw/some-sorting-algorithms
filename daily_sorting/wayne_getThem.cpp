@@ -19,7 +19,7 @@ wayne_getThem::~wayne_getThem(void) {
 }
 
 void wayne_getThem::readODTrip() {
-	ifstream fin("E:\\semester\\1\\WayneProgram\\daily_sorting\\data\\20170405-Trip-statistics-2CN100w.csv");
+	ifstream fin("..\\data\\20170405-Trip-statistics-2CN100w.csv");
 	string line;
 	double tempX;
 	int number=0;
@@ -59,7 +59,7 @@ void wayne_getThem::readODTrip() {
 }
 
 void wayne_getThem::readODTripSorted() {
-	ifstream fin("E:\\semester\\1\\WayneProgram\\daily_sorting\\data\\20170405-Trip-statistics-2CN100w_sorted.csv");
+	ifstream fin("..\\data\\20170405-Trip-statistics-2CN100w_sorted.csv");
 	string line;
 	double tempX;
 	int number=0;
@@ -107,7 +107,7 @@ double wayne_getThem::convertStringToDouble(string str1) {
 
 void wayne_getThem::makeFileOfVector(vector<double> &vec1) {
 	ofstream outfile1;
-	outfile1.open("E:\\semester\\1\\WayneProgram\\daily_sorting\\result\\sortedVector.csv");
+	outfile1.open("..\\result\\sortedVector.csv");
 	for(unsigned int i=0;i<vec1.size();i++) {
 		outfile1<<fixed<<setprecision(9)<<i<<","<<vec1[i]<<endl;
 		if(vec1[i]!=sorted_OGrid_X[i]) {

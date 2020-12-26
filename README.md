@@ -9,5 +9,7 @@ For understanding sorting algorithms in big scale data (one million)
 
 4.quick sort
 
+5.heap sort
+
 To be continued...
 

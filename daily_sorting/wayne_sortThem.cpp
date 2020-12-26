@@ -1,6 +1,7 @@
 #include "wayne_sortThem.h"
 #include <utility>      // std::swap
 #include<iostream>
+#include <algorithm>
 
 using namespace std;
 wayne_sortThem::wayne_sortThem(void) {
@@ -9,7 +10,16 @@ wayne_sortThem::wayne_sortThem(void) {
 wayne_sortThem::~wayne_sortThem(void) {
 }
 
+
+bool wayne_sortThem::ascending(double& x, double& y) {
+	return x < y;
+}
+bool wayne_sortThem::descending(double& x, double& y) {
+	return x > y;
+}
+
 void wayne_sortThem::selectionSort(vector<double> &vec1,const vector<double> &vec2) {
+	cout << "selectionSort:" << endl;
 	vec1=vec2; 
 	int times=10000;
 	int temp_i;
@@ -31,6 +41,7 @@ void wayne_sortThem::selectionSort(vector<double> &vec1,const vector<double> &ve
 }
 
 void wayne_sortThem::bubbleSort(vector<double> &vec1,const vector<double> &vec2) {
+	cout << "bubbleSort:" << endl;
 	vec1=vec2;
 	int times=10000;
 	bool flag=true;
@@ -54,6 +65,7 @@ void wayne_sortThem::bubbleSort(vector<double> &vec1,const vector<double> &vec2)
 }
 
 void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &vec2) {
+	cout << "insertionSort:" << endl;
 	vec1=vec2;
 	double temp;
 	int times=10000;
@@ -78,6 +90,7 @@ void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &ve
 }
 
 void wayne_sortThem::quickSort(vector<double> &vec1,const vector<double> &vec2) {
+	cout << "quickSort:" << endl;
 	vec1=vec2;
 	quickSortSub(0,vec1.size()-1,vec1);                       //the implemention of quicksort
 }
@@ -112,4 +125,41 @@ void wayne_sortThem::quickSortSub(int left,int right,vector<double> &vec1) {
 	if(j+1<right) {
 		quickSortSub(j+1,right,vec1);           //quicksort right sub
 	}	
+}
+
+void wayne_sortThem::heapSortLazy(vector<double>& vec1, const vector<double>& vec2, bool (*comp)(double& a, double& b)) {
+	cout << "heapSortLazy:" << endl;
+	vec1 = vec2;
+	for (unsigned int i = 0; i < vec1.size(); i++) {
+		std::make_heap(vec1.begin(), vec1.end() - i, comp);
+		std::pop_heap(vec1.begin(), vec1.end() - i, comp);
+	}
+}
+
+void wayne_sortThem::heapSort(vector<double>& vec1, const vector<double>& vec2, bool (*comp)(double& a, double& b)) {
+	cout << "heapSort:" << endl;
+	vec1 = vec2;
+	this->buildHeap(vec1, comp);
+	int currentSize = (int)vec1.size();
+	for (int i = 1; i < (int)vec1.size(); i++) {
+		std::swap(vec1[0], vec1[currentSize - i]);
+		this->adjustHeap(vec1, currentSize - i, 0, comp);
+	}
+}
+void wayne_sortThem::buildHeap(vector<double>& vec, bool (*comp)(double& a, double& b)) {
+	int heapSize = (int)vec.size();
+	for (int i = heapSize / 2; i >= 0; i--) {
+		this->adjustHeap(vec, heapSize, i, comp);
+	}
+}
+void wayne_sortThem::adjustHeap(vector<double>& vec, int heapSize, int index, bool (*comp)(double& a, double& b)) {
+	int left = 2 * index + 1;
+	int right = 2 * index + 2;
+	int largest = index;
+	if (left < heapSize && !comp(vec[left], vec[largest])) largest = left;
+	if (right < heapSize && !comp(vec[right], vec[largest])) largest = right;
+	if (largest != index) {
+		std::swap(vec[largest], vec[index]);
+		this->adjustHeap(vec, heapSize, largest, comp);
+	}
 }

@@ -1,0 +1,8 @@
+﻿  main.cpp
+  wayne_getThem.cpp
+  wayne_sortThem.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 258 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  daily_sorting.vcxproj -> D:\CodingPractice\daily_sorting\some-sorting-algorithms\Release\daily_sorting.exe

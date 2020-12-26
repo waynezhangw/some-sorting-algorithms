@@ -124,6 +124,8 @@ void wayne_getThem::run() {
 	//obj_sort1->selectionSort(ME,OGrid_X);         //runtime 35N s
 	//obj_sort1->bubbleSort(ME,OGrid_X);            //runtime 193N s
 	//obj_sort1->insertionSort(ME,OGrid_X);         //runtime 37N s
-	obj_sort1->quickSort(ME,OGrid_X);             //runtime only N s
+	//obj_sort1->quickSort(ME,OGrid_X);             //runtime only 18.8 s
+	//obj_sort1->heapSortLazy(ME, OGrid_X, obj_sort1->ascending);  //runtime 6974 s
+	obj_sort1->heapSort(ME, OGrid_X, obj_sort1->ascending);  //runtime only 18.8 s
 	makeFileOfVector(ME);                         //output to file and testing
 }

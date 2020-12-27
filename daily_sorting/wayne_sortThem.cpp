@@ -64,7 +64,7 @@ void wayne_sortThem::bubbleSort(vector<double> &vec1,const vector<double> &vec2)
 	}
 }
 
-void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &vec2) {
+void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &vec2, bool (*comp)(double& a, double& b)) {
 	cout << "insertionSort:" << endl;
 	vec1=vec2;
 	double temp;
@@ -73,7 +73,7 @@ void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &ve
 	for(unsigned int i=1;i<vec2.size();i++) {
 		temp=vec1[i];                                         //waiting for insertion
 		insertPos=i;                                          //if no exchange below, it might already the biggest when inserting
-		for(unsigned int j=i-1;j>=0 && temp<vec1[j];j--) {
+		for(unsigned int j=i-1;j>=0 && comp(temp, vec1[j]);j--) {
 			vec1[j+1]=vec1[j];                                //stable sort, relative order will not change
 			insertPos=j;
 			if(j==0) {
@@ -82,19 +82,19 @@ void wayne_sortThem::insertionSort(vector<double> &vec1,const vector<double> &ve
 			}
 		}
 		vec1[insertPos]=temp;
-		if(i==times) {
+		/*if(i==times) {
 			cout<<i<<endl;
 			times=times+10000;
-		}
+		}*/
 	}
 }
 
-void wayne_sortThem::quickSort(vector<double> &vec1,const vector<double> &vec2) {
+void wayne_sortThem::quickSort(vector<double> &vec1,const vector<double> &vec2, bool (*comp)(double& a, double& b)) {
 	cout << "quickSort:" << endl;
 	vec1=vec2;
-	quickSortSub(0,vec1.size()-1,vec1);                       //the implemention of quicksort
+	quickSortSub(0,vec1.size()-1,vec1, comp);                       //the implemention of quicksort
 }
-void wayne_sortThem::quickSortSub(int left,int right,vector<double> &vec1) {
+void wayne_sortThem::quickSortSub(int left,int right,vector<double> &vec1, bool (*comp)(double& a, double& b)) {
 	int i=left;                                                //start from the very left to the right until meet j
 	int j=right;                                               //start from the very right to the left until meet i
 	double tempBi=vec1[left];                                  //store base value for comparison(random algorithm will sample a index between left and right)
@@ -105,8 +105,8 @@ void wayne_sortThem::quickSortSub(int left,int right,vector<double> &vec1) {
 	}
 	while(i!=j && i<j) {
 		//start from the right side
-		while(vec1[j]>=tempBi && i<j) j--;              //to find a value from right part that is bigger than base value, and then exchange that value to the front side
-		while(vec1[i]<=tempBi && i<j) i++;
+		while(!comp(vec1[j], tempBi) && i<j) j--;              //to find a value from right part that is bigger than base value, and then exchange that value to the front side
+		while(!comp(tempBi, vec1[i]) && i<j) i++;
 
 		if(i==j) {                           //time to move base value
 			vec1[left]=vec1[j];             //move meeting value to the very left
@@ -120,10 +120,10 @@ void wayne_sortThem::quickSortSub(int left,int right,vector<double> &vec1) {
 		system("pause");
 	}
 	if(left<j-1) {
-		quickSortSub(left,j-1,vec1);            //quicksort left sub
+		quickSortSub(left,j-1,vec1, comp);            //quicksort left sub
 	}
 	if(j+1<right) {
-		quickSortSub(j+1,right,vec1);           //quicksort right sub
+		quickSortSub(j+1,right,vec1, comp);           //quicksort right sub
 	}	
 }
 
